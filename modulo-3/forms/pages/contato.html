@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+  <script>
+  function initMap() {
+      const map = new google.maps.Map(document.getElementById("map"), {
+        center: { lat: -33.866, lng: 151.196 },
+        zoom: 15,
+      });
+      const request = {
+        placeId: "ChIJN1t_tDeuEmsRUsoyG83frY4",
+        fields: ["name", "formatted_address", "place_id", "geometry"],
+      };
+      const infowindow = new google.maps.InfoWindow();
+      const service = new google.maps.places.PlacesService(map);
+
+      service.getDetails(request, (place, status) => {
+        if (
+          status === google.maps.places.PlacesServiceStatus.OK &&
+          place &&
+          place.geometry &&
+          place.geometry.location
+        ) {
+          const marker = new google.maps.Marker({
+            map,
+            position: place.geometry.location,
+          });
+
+          google.maps.event.addListener(marker, "click", () => {
+            const content = document.createElement("div");
+            const nameElement = document.createElement("h2");
+
+            nameElement.textContent = place.name;
+            content.appendChild(nameElement);
+
+            const placeIdElement = document.createElement("p");
+
+            placeIdElement.textContent = place.place_id;
+            content.appendChild(placeIdElement);
+
+            const placeAddressElement = document.createElement("p");
+
+            placeAddressElement.textContent = place.formatted_address;
+            content.appendChild(placeAddressElement);
+            infowindow.setContent(content);
+            infowindow.open(map, marker);
+          });
+        }
+      });
+    }
+
+    window.initMap = initMap;
+  </script>
+
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    #scrollBar {
+        position: fixed;
+        background-color: #07304C;
+        width: 1920px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+      }
+  
+      #scrollBar a{
+        display: flex;
+        align-items: center;
+        height: 50px;
+        background-color: #07304C;
+        text-decoration: none;
+        color: white;
+        font-size: 24px;
+        padding-left: 50px;
+        padding-right: 50px;
+      }
+  
+      #scrollBar a:hover{
+        background-color: #174056;
+  
+      }
+
+    #scrollBar .home {
+      margin-left: 120px;
+    }
+
+    main {
+      background-color: red;
+      position: relative;
+      top:50px;
+    }
+
+    #map {
+        height: 100%;
+      }
+
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+  </style>
+</head>
+<body>
+  <header>
+    <div id="scrollBar">
+      <a class="home" href="./home.html">Home</a>
+      <a href="./orçament.html">Orçament</a>
+      <a href="./contato.html">Contato</a>
+    </div>
+  </header>
+  <main>
+    <div id="map"></div>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=INSERT_YOUR_API_KEY&callback=initMap&libraries=places&v=weekly&solution_channel=GMP_CCS_placedetails_v1"
+      defer
+    ></script>
+</body>
+</html>

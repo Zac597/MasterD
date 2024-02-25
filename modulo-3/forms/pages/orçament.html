@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Carregar dados</title>
+    <style>
+      *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+  
+      body {
+        color: rgb(201, 201, 201);
+
+      }
+
+      #scrollBar {
+        position: fixed;
+        background-color: #07304C;
+        width: 1920px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+      }
+  
+      #scrollBar a{
+        display: flex;
+        align-items: center;
+        height: 50px;
+        background-color: #07304C;
+        text-decoration: none;
+        color: white;
+        font-size: 24px;
+        padding-left: 50px;
+        padding-right: 50px;
+      }
+  
+      #scrollBar a:hover{
+        background-color: #174056;
+  
+      }
+  
+      #scrollBar .home {
+        margin-left: 120px;
+      }
+
+      main {
+        background-color: #042B48;
+        position: relative;
+        top:50px;
+        padding-bottom: 80px;
+        padding-left: 30px;
+    }
+
+#dados {
+  padding-top:50px;
+}
+
+#orçament {
+  margin-bottom: 25px;
+}
+
+ul {
+  margin: 20px 0;
+}
+
+ul li {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 3px;
+}
+
+#selection, #praze {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 3px;
+}
+
+#separadores {
+  margin: 15px 0;
+  font-weight: 700;
+  color: white;
+
+}
+
+    .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+    .dropbtn {
+  background-color: rgb(0, 97, 224);
+  color: white;
+  font-size: 23px;
+  border: none;
+  padding: 23px;
+}
+
+
+.drop {
+  display: none;
+  position: absolute;
+  background-color: white;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.6);
+}
+
+.drop a {
+  font-size: 20px;
+  color: black;
+  display: block;
+  text-decoration: none;
+  padding: 16px 43.5px 16px 20px; 
+  cursor: pointer;
+}
+
+.drop a:hover{
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .drop {
+  display: block;
+}
+
+.content-box {
+  display: flex;
+  gap: 5px;
+}
+
+.content {
+  display: flex;
+  gap: 5px;
+}
+
+#estimate {
+  margin-top: 40px;
+  padding-bottom:28px;
+}
+
+#estimate span{
+  font-weight: 700;
+}
+
+.valorFinal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  height: 18px;
+  width: 160px;
+}
+    </style>
+  </head>
+  <body>
+    <header>
+      <div id="scrollBar">
+        <a class="home" href="./home.html">Home</a>
+        <a href="./orçament.html">Orçament</a>
+        <a href="./contato.html">Contato</a>
+      </div>
+    </header>
+    <main>
+      <form>
+      <h2 id="dados">Dados</h2>
+      <ul>
+        <li><p>Nome:</p><input type="name"></li>
+        <li><p>Apelido:</p><input type="name"></li>
+        <li><p>Telemóvel:</p><input type="tel"></li>
+      </ul>
+      <h2 id="orçament">Pedido de Orçamento</h2>   
+      <div id="selection">
+        <p>Tipo de página web:</p>
+        <select id="options">
+          <option value="0">Selecione...</option>
+          <option value="200">Landing page</option>
+          <option value="300">Blog</option>
+          <option value="400">Portal de noticias</option>
+        </select>
+      </div>
+
+    <div id="praze"><p>Prazo em meses:</p><input type="number" id="meses" name="meses" min="1" max="3" required></div>
+
+      <p id="separadores">Marque os separadores desejados</p>  
+          <div class="content">
+            <div class="content-box"><input value="100" type="checkbox"> <p>Quem somos</p></div>
+            <div class="content-box"><input value="110" type="checkbox"> <p>Onde estamos</p></div>
+          </div>
+          <div class="content">
+            <div class="content-box"><input value="90" type="checkbox"> <p>Galeria de fotografias</p> </div>
+            <div class="content-box"><input value="200" type="checkbox"> <p>eCommerce</p></div>
+          </div>
+          <div class="content">
+            <div class="content-box"><input value="300" type="checkbox"> <p>Gestão interna</p> </div>
+            <div class="content-box"><input value="150" type="checkbox"> <p>Notícias</p></div>
+          </div>
+          <div class="content-box"><input value="125" type="checkbox"> <p>Redes sociais</p> </div>
+
+      <div id="estimate">
+        <p><span>Orçamento estimado</span> <br> (É um valor meramento indicativo, pode sofrer alterações)</p>
+      </div>
+
+      <div class="valorFinal" id="valorFinal"></div>
+      </form>
+    </main>
+    <script type="text/javascript">
+
+document.getElementById('options').addEventListener('change', calcularSoma);
+
+document.getElementById('meses').addEventListener('change', calcularSoma);
+
+let checkBox = document.querySelectorAll('input[type="checkbox"]');
+checkBox.forEach(function(checkbox) {
+    checkbox.addEventListener('change', calcularSoma);
+});
+
+function calcularSoma() {
+    const opcaoSelecionada = parseInt(document.getElementById('options').value);
+    const valorInput = parseInt(document.getElementById('meses').value);
+    let somaCheckBox = 0;
+
+    checkBox.forEach(function(checkbox) {
+        if (checkbox.checked) {
+            somaCheckBox += parseInt(checkbox.value);
+        }
+    });
+
+    let somaTotal = opcaoSelecionada + somaCheckBox;
+    let desconto
+
+    if (valorInput === 1) {
+        desconto = somaTotal * 0.05;
+    } else if (valorInput === 2) {
+        desconto = somaTotal * 0.10;
+    } else {
+        desconto = somaTotal * 0.20;
+    }
+
+    let totalComDesconto = somaTotal - desconto;
+
+    exibirResultado(totalComDesconto);
+}
+
+// Função para exibir o resultado
+function exibirResultado(resultado) {
+    document.getElementById('resultado').textContent = "A soma dos valores é: " + resultado;
+}
+
+// Função para exibir o resultado
+function exibirResultado(resultado) {
+    document.getElementById('valorFinal').textContent = "A soma dos valores é: " + resultado;
+}
+    </script>
+  </body>
+</html>

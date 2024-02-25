@@ -1,0 +1,93 @@
+nav {
+  background-color: black;
+  margin-bottom: 100px;
+}
+
+nav a {
+  padding: 24px 30px;
+  font-size: 23px;
+  color: white;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background: aqua;
+}
+
+nav button:hover {
+  background: aqua;
+  cursor: pointer
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: black;
+  color: white;
+  font-size: 23px;
+  border: none;
+  padding: 23px;
+}
+
+.drop {
+  display: none;
+  position: absolute;
+  background-color: white;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.6);
+}
+
+.drop a {
+  font-size: 20px;
+  color: black;
+  display: block;
+  text-decoration: none;
+  padding: 16px 43.5px 16px 20px; 
+}
+
+.drop a:hover{
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .drop {
+  display: block;
+}
+
+main {
+  width: 640px;
+  margin: 0 auto;
+}
+
+.resume h1, h2{
+  text-align: center;
+}
+
+.discs {
+  margin: 70px 0 70px;
+  text-align: center;
+}
+
+.discs h2 {
+  font-size: 16px;
+}
+
+.content-box {
+display: flex;
+justify-content: space-between;
+}
+
+.box img {
+  height: 200px;
+  width: 200px;
+}
+
+.meio {
+  color: white;
+  background-color: black;
+}
+
+.programing {
+  text-align: center;
+}
