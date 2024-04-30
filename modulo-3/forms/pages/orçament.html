@@ -146,9 +146,11 @@ ul li {
   justify-content: center;
   align-items: center;
   text-align: center;
-  background-color: rgb(255, 255, 255);
-  height: 18px;
-  width: 160px;
+  text-decoration: underline;
+  color: white;
+  height: 35px;
+  width: 250px;
+  
 }
     </style>
   </head>
@@ -241,14 +243,8 @@ function calcularSoma() {
     exibirResultado(totalComDesconto);
 }
 
-// Função para exibir o resultado
 function exibirResultado(resultado) {
-    document.getElementById('resultado').textContent = "A soma dos valores é: " + resultado;
-}
-
-// Função para exibir o resultado
-function exibirResultado(resultado) {
-    document.getElementById('valorFinal').textContent = "A soma dos valores é: " + resultado;
+    document.getElementById('valorFinal').textContent = "O valor do seu orçamento é: " + resultado;
 }
     </script>
   </body>

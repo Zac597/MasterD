@@ -4,28 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link rel="stylesheet" href="lightbox2-2.11.3/dist/css/lightbox.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <style>
-
-    body {
-      height:1500px
-    }
-
     *{
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    #scrollBar {
-        position: fixed;
+      #header {
         background-color: #07304C;
-        width: 1920px;
-        height: 50px;
+        position: fixed;
+        width: 100%;
         display: flex;
-        align-items: center;
+        z-index: 1000;
       }
   
-      #scrollBar a{
+      #header a{
         display: flex;
         align-items: center;
         height: 50px;
@@ -35,39 +31,153 @@
         font-size: 24px;
         padding-left: 50px;
         padding-right: 50px;
+
       }
   
-      #scrollBar a:hover{
+      #header a:hover{
         background-color: #174056;
   
       }
 
-    #scrollBar .home {
+    #header .home {
       margin-left: 120px;
     }
-    main {
-      background-color: red;
-      position: relative;
-      top:50px;
+
+    #index {
+      padding-top: 50px;
+      padding-left: 50px;
+      margin-bottom: 100px;
     }
 
+    #sidebar {
+            width: 20%;
+            height: 550px;
+            position: absolute;
+            top: 90px;
+            right: 50px;
+            border: 1px solid cadetblue;
+            overflow: scroll;
+        }
+
+    #central-content {
+      padding-top: 50px;
+    }
+
+    #portfolio {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+    }
+
+    #portfolio h3{
+      font-size:40px;
+    }
+
+    #carrossel {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 50px;
+      margin-bottom: 50px;
+    }
+
+    #carrossel a {
+      text-decoration: none;
+    }
+
+    #carrossel p {
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      color: black;
+    }
+
+    
   </style>
 </head>
 <body>
   <header>
-    <div id="scrollBar">
+    <nav id="header">
       <a class="home" href="./home.html">Home</a>
       <a href="./orçament.html">Orçament</a>
       <a href="./contato.html">Contato</a>
-    </div>
+    </nav>
   </header>
-  <main>
-<h1>teste</h1>
-  </main>
+  <div id="index" class="main-content">
+    <div id="sidebar"><!-- Noticias RSS externas --></div>
+    <div id="central-content"><!-- conteúdo principal através de AJAX --></div>
+  </div>
+  <div id="portfolio" class="main-content">
+    <h3>Nossos Trabalhos</h3>
+    <div id="carrossel">
+      <a 
+        class="example‐image‐link" 
+        href="../imgs/image1.jpeg" 
+        data-lightbox="example‐1">
+        <p>Landing Page</p>
+          <img 
+            class="example‐image"
+            src="../imgs/image1.jpeg" 
+            alt="image‐1" 
+            width="350px"/>
+      </a>
+      <a 
+        class="example‐image‐link" 
+        href="../imgs/image2.jpeg" 
+        data‐lightbox="example‐1">
+        <p>Blog</p>
+          <img 
+            class="example‐image"
+            src="../imgs/image2.jpeg" 
+            alt="image‐1" 
+            width="350px"/>
+      </a>
+      <a 
+      
+        class="example‐image‐link" 
+        href="../imgs/image3.webp" 
+        data‐lightbox="example‐1">
+        <p>Portal de noticias</p>
+          <img 
+            class="example‐image"
+            src="../imgs/image3.webp" 
+            alt="image‐1" 
+            width="350px"/>
+      </a>
+    </div>
+  </div>
 </body>
   <script>
-    // setTimeout(() => {
-    // alert('Bem vindo ao meu site')
-    // }, 5000)
+
+    // setTimeout(() => { 
+    //   alert("Seja bem vindo!")
+    // }, "5000")
+
+      let botao = document.getElementById("sidebar")
+      botao.onload = carregar();
+
+      let botao2 = document.getElementById("central-content")
+      botao.onload = carregar();
+
+     function carregar() {
+            let url = 'https://news.google.com/rss?hl=pt‐PT&gl=PT&ceid=PT:pt‐150';
+            $.ajax({
+                url:"https://api.rss2json.com/v1/api.json?rss_url=" + url, type: 'GET',
+                success: function (data) {
+                    objeto_json = eval(data);
+                    let frase = "";
+                    for (i = 0; i < objeto_json.items.length; i++)
+{
+                        frase = frase + "Título: <b>" + objeto_json.items[i].title + "</b><br/>";
+                        frase = frase + objeto_json.items[i].description + "<br/>";
+                    }
+                    $("#sidebar").html(frase);
+                    $("#central-content").html(frase);
+                },
+                error: function (xhr, status) {
+                    alert('Ocorreu um erro.');
+                }
+            });
+          }
   </script>
+    <script src="lightbox2-2.11.3/dist/js/lightbox-plus-jquery.min.js"></script>
 </html>

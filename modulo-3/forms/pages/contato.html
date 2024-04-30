@@ -1,76 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-  <script>
-  function initMap() {
-      const map = new google.maps.Map(document.getElementById("map"), {
-        center: { lat: -33.866, lng: 151.196 },
-        zoom: 15,
-      });
-      const request = {
-        placeId: "ChIJN1t_tDeuEmsRUsoyG83frY4",
-        fields: ["name", "formatted_address", "place_id", "geometry"],
-      };
-      const infowindow = new google.maps.InfoWindow();
-      const service = new google.maps.places.PlacesService(map);
-
-      service.getDetails(request, (place, status) => {
-        if (
-          status === google.maps.places.PlacesServiceStatus.OK &&
-          place &&
-          place.geometry &&
-          place.geometry.location
-        ) {
-          const marker = new google.maps.Marker({
-            map,
-            position: place.geometry.location,
-          });
-
-          google.maps.event.addListener(marker, "click", () => {
-            const content = document.createElement("div");
-            const nameElement = document.createElement("h2");
-
-            nameElement.textContent = place.name;
-            content.appendChild(nameElement);
-
-            const placeIdElement = document.createElement("p");
-
-            placeIdElement.textContent = place.place_id;
-            content.appendChild(placeIdElement);
-
-            const placeAddressElement = document.createElement("p");
-
-            placeAddressElement.textContent = place.formatted_address;
-            content.appendChild(placeAddressElement);
-            infowindow.setContent(content);
-            infowindow.open(map, marker);
-          });
-        }
-      });
-    }
-
-    window.initMap = initMap;
-  </script>
-
-  <style>
+<meta charset="UTF-8">
+<script type="text/JavaScript"></script>
+<script
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ4UYojA3Ldu
+ldgOlizCQJjjpNCjHkvn4&callback=myMap"></script>
+<script type="text/JavaScript">
+/* criar a variavel ponto com definição de coordenadas */
+function carregarmapa() {
+var ponto = new google.maps.LatLng(38.73376520878317, -
+9.141150730691137);
+/* criar as opções do mapa */
+var opcoes = {
+zoom: 12,
+center: ponto,
+mapTypeId: google.maps.MapTypeId.ROADMAP};
+/* criar o mapa */
+var m = new google.maps.Map(document.getElementById("mapa"),
+opcoes);
+/* criar a marca */
+var marca = new google.maps.Marker({
+position: ponto,
+map: m,
+title: "MasterD"
+});
+}
+</script>
+<style>
     *{
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    #scrollBar {
-        position: fixed;
+      #scrollBar {
         background-color: #07304C;
-        width: 1920px;
-        height: 50px;
+        position: fixed;
+        overflow: hidden;
+        width: 100%;
         display: flex;
-        align-items: center;
       }
   
       #scrollBar a{
@@ -94,37 +63,40 @@
       margin-left: 120px;
     }
 
-    main {
-      background-color: red;
-      position: relative;
-      top:50px;
+    .titulo {
+      padding-top: 50px;
     }
-
-    #map {
-        height: 100%;
-      }
-
-      html,
-      body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-  </style>
+</style>
 </head>
-<body>
-  <header>
-    <div id="scrollBar">
-      <a class="home" href="./home.html">Home</a>
-      <a href="./orçament.html">Orçament</a>
-      <a href="./contato.html">Contato</a>
-    </div>
-  </header>
-  <main>
-    <div id="map"></div>
-    <script
-      src="https://maps.googleapis.com/maps/api/js?key=INSERT_YOUR_API_KEY&callback=initMap&libraries=places&v=weekly&solution_channel=GMP_CCS_placedetails_v1"
-      defer
-    ></script>
+<body onload="carregarmapa()">
+
+  <nav id="scrollBar">
+    <a class="home" href="./home.html">Home</a>
+    <a href="./orçament.html">Orçament</a>
+    <a href="./contato.html">Contato</a>
+  </nav>
+
+<h1 class="titulo">About</h1>
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+    Praesentium saepe quasi beatae laudantium. Asperiores magni dolore, 
+    nisi quod tenetur rerum minima hic atque vel, vitae expedita? Illum ipsa soluta voluptatibus?</p>
+
+  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
+    Praesentium saepe quasi beatae laudantium. Asperiores magni dolore, 
+    nisi quod tenetur rerum minima hic atque vel, vitae expedita? Illum ipsa soluta voluptatibus?</p>
+
+  <form>
+    <h1>Entre em contato conosco</h1>
+    <input type="text" placeholder="Nome">
+    <input type="text" placeholder="Sobrenome">
+    <input type="number" name="" id="" placeholder="Telemóvel">
+    <input type="email" name="" id="" placeholder="E-mail">
+    <input type="date" name="" id="">
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+    <input type="submit" value="En">
+  </form>
+
+<h2>O meu Google Maps</h2>
+<div id="mapa" style="width: 600px; height: 300px;"></div>
 </body>
 </html>
