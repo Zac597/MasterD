@@ -3,28 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <script type="text/JavaScript"></script>
-<script
-src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJ4UYojA3Ldu
-ldgOlizCQJjjpNCjHkvn4&callback=myMap"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDPvB5cO8vDIUwZEpgvskvow5D3zVXBoeo"></script>
 <script type="text/JavaScript">
-/* criar a variavel ponto com definição de coordenadas */
-function carregarmapa() {
-var ponto = new google.maps.LatLng(38.73376520878317, -
-9.141150730691137);
-/* criar as opções do mapa */
-var opcoes = {
-zoom: 12,
-center: ponto,
-mapTypeId: google.maps.MapTypeId.ROADMAP};
-/* criar o mapa */
-var m = new google.maps.Map(document.getElementById("mapa"),
-opcoes);
-/* criar a marca */
-var marca = new google.maps.Marker({
-position: ponto,
-map: m,
-title: "MasterD"
-});
+// Função de inicialização do mapa
+function initMap() {
+    // Cria um novo mapa dentro do elemento com id "mapa"
+    let map = new google.maps.Map(document.getElementById('mapa'), {
+        zoom: 12, // Zoom inicial
+        center: { lat: -23.5505, lng: -46.6333 } // Coordenadas iniciais (exemplo: São Paulo)
+    });
+
+    // Inicializa o serviço de direções
+    let directionsService = new google.maps.DirectionsService();
+    let directionsDisplay = new google.maps.DirectionsRenderer();
+    directionsDisplay.setMap(map);
+
+    // Obtém a localização do usuário (pode ser mais sofisticado dependendo do ambiente)
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            let userLocation = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            // Define o destino (coordenadas do seu destino), 
+            let destination = { lat: 41.15657671769609, lng: -8.610188875786578 };
+
+            // Define a rota
+            let request = {
+                origin: userLocation,
+                destination: destination,
+                travelMode: 'DRIVING' // Pode ser 'DRIVING', 'WALKING', 'BICYCLING' ou 'TRANSIT'
+            };
+
+            // Calcula a rota entre a localização do usuário e o destino
+            directionsService.route(request, function(result, status) {
+                if (status == 'OK') {
+                    // Exibe a rota no mapa
+                    directionsDisplay.setDirections(result);
+                } else {
+                    window.alert('Não foi possível calcular a rota: ' + status);
+                }
+            });
+
+            // Marca no mapa a posição do usuário
+            let userMarker = new google.maps.Marker({
+                position: userLocation,
+                map: map,
+                title: 'Sua Localização'
+            });
+
+        }, function() {
+            window.alert('Não foi possível obter sua localização.');
+        });
+    } else {
+        window.alert('Seu navegador não suporta geolocalização.');
+    }
 }
 </script>
 <style>
@@ -34,15 +68,29 @@ title: "MasterD"
       box-sizing: border-box;
     }
 
-      #scrollBar {
+    body {
+      background-color: #042B48;
+      color: white;
+    }
+
+    #page {
+      position: relative;
+      top: 50px;
+      margin-left: 50px;
+      
+    }
+
+      #header {
         background-color: #07304C;
         position: fixed;
         overflow: hidden;
         width: 100%;
         display: flex;
+        z-index: 1000;
+
       }
   
-      #scrollBar a{
+      #header a{
         display: flex;
         align-items: center;
         height: 50px;
@@ -54,49 +102,119 @@ title: "MasterD"
         padding-right: 50px;
       }
   
-      #scrollBar a:hover{
+      #header a:hover{
         background-color: #174056;
   
       }
 
-    #scrollBar .home {
+    #header .home {
       margin-left: 120px;
     }
 
-    .titulo {
+    #about {
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    #page h1{
       padding-top: 50px;
+    }
+
+    #persons {
+      display: flex;
+      gap: 350px;
+    }
+
+    #person {
+      text-align: center;
+    }
+    #person img {
+      width: 250px;
+      height: 250px;
+    }
+
+    form {
+      gap: 40px;
+      display: flex;
+      justify-content:center;
+      flex-direction:column;
+      align-items: center;
+      margin-bottom: 120px;
+    }
+
+    form input{
+      border: 0;
+      border-radius: 10px;
+      height: 50px;
+      width: 350px;
+      padding: 10px;
+    }
+
+    .submit:hover {
+      background-color: rgb(170, 168, 168);
+      cursor: pointer;
+    }
+
+    form textarea{
+      border: 0;
+      border-radius: 10px;
+      height: 270px;
+      width: 350px;
+      padding: 10px;
+
+    }
+
+    #mapa {
+      margin: 0 auto;
     }
 </style>
 </head>
-<body onload="carregarmapa()">
+<body onload="initMap()">
 
-  <nav id="scrollBar">
+  <nav id="header">
     <a class="home" href="./home.html">Home</a>
     <a href="./orçament.html">Orçament</a>
     <a href="./contato.html">Contato</a>
   </nav>
+<div id="page">
+  <h1 class="titulo">Sobre Nós</h1>
+  <div id="about">
 
-<h1 class="titulo">About</h1>
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-    Praesentium saepe quasi beatae laudantium. Asperiores magni dolore, 
-    nisi quod tenetur rerum minima hic atque vel, vitae expedita? Illum ipsa soluta voluptatibus?</p>
+    <h2>Duo</h2>
+      <p>Empresa especializada na criação de sites e aplicativos</p>
+  <div id="persons">
 
-  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-    Praesentium saepe quasi beatae laudantium. Asperiores magni dolore, 
-    nisi quod tenetur rerum minima hic atque vel, vitae expedita? Illum ipsa soluta voluptatibus?</p>
-
+  <div id="person">
+    <img src="../imgs/isaac_avatar.jpg">
+    <h3>Isaac</h3>
+      <p>Sócio Fundador - Programador Front-end</p>
+  </div>
+  <div id="person">
+    <img src="../imgs/gustavo_avatar.jpg">
+    <h3>Gustavo Vasquez</h3>
+      <p>Sócio Fundador - Programador Back-end</p>
+  </div>
+  </div>
+  </div>
+  <h1>Entre em contato conosco</h1>
   <form>
-    <h1>Entre em contato conosco</h1>
     <input type="text" placeholder="Nome">
     <input type="text" placeholder="Sobrenome">
     <input type="number" name="" id="" placeholder="Telemóvel">
     <input type="email" name="" id="" placeholder="E-mail">
     <input type="date" name="" id="">
     <textarea name="" id="" cols="30" rows="10"></textarea>
-    <input type="submit" value="En">
+    <input class="submit" type="submit" value="Enviar">
   </form>
 
-<h2>O meu Google Maps</h2>
-<div id="mapa" style="width: 600px; height: 300px;"></div>
+  <div id="location">
+  <h2>Localização</h2>
+  <div id="mapa" style="width:900px; height: 600px;"></div>
+  <p><span>Nossa sede: 501, Rua de Camões 497, 4000-147 Porto</span></p>
+  </div>
+</div>
 </body>
 </html>

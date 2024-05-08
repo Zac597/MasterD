@@ -13,6 +13,11 @@
       box-sizing: border-box;
     }
 
+    body{
+      background-color: #042B48;
+      color: white;
+    }
+
       #header {
         background-color: #07304C;
         position: fixed;
@@ -59,6 +64,10 @@
             overflow: scroll;
         }
 
+    #sidebar a {
+      color: orange;
+    }
+
     #central-content {
       padding-top: 50px;
     }
@@ -88,7 +97,7 @@
     #carrossel p {
       margin-bottom: 10px;
       text-transform: uppercase;
-      color: black;
+      color: white;
     }
 
     
@@ -148,9 +157,9 @@
 </body>
   <script>
 
-    // setTimeout(() => { 
-    //   alert("Seja bem vindo!")
-    // }, "5000")
+    setTimeout(() => { 
+      alert("Seja bem vindo!")
+    }, "5000")
 
       let botao = document.getElementById("sidebar")
       botao.onload = carregar();
